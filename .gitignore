@@ -1,0 +1,41 @@
+# Node and npm
+node_modules/
+npm-debug.log*
+
+# Build and temp files
+dist/
+build/
+.tmp/
+.temp/
+.DS_Store
+Thumbs.db
+
+# Environment and configuration
+.env
+.env.local
+.env.*.local
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Coverage and test outputs
+coverage/
+jest-coverage/
+*.lcov
+
+# System files
+*.log
+*.bak
+*.tmp
+
+# Netlify
+.netlify/
+netlify.toml.backup
+
+# Misc
+*.zip
+*.tar
+*.tar.gz
