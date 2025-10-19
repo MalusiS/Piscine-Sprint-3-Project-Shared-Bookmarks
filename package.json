@@ -1,0 +1,27 @@
+{
+  "name": "piscine-sprint-3-project-shared-bookmarks",
+  "version": "1.0.0",
+  "description": "As developers, we spend a lot of time reading articles on the web and we often want to record useful links to come back to them later. It is fun to share your bookmarks with others so that they can find interesting and useful links too.",
+  "main": "script.js",
+  "scripts": {
+    "test": "jest --passWithNoTests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MalusiS/Piscine-Sprint-3-Project-Shared-Bookmarks.git"
+  },
+  "keywords": [
+    "bookmarks",
+    "javascript",
+    "localstorage"
+  ],
+  "author": "Malusi Skunyana",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MalusiS/Piscine-Sprint-3-Project-Shared-Bookmarks/issues"
+  },
+  "homepage": "https://github.com/MalusiS/Piscine-Sprint-3-Project-Shared-Bookmarks#readme",
+  "devDependencies": {
+    "jest": "^30.2.0"
+  }
+}
