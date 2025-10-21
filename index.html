@@ -1,8 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shared Bookmarks</title>
     <script type="module" src="script.js"></script>
   </head>
+
   <body>
+
+    <main id="app">
+      <h1>Shared Bookmarks</h1>
+
+      <section id="user-section">
+        <label for="user-select">Select User:</label>
+        <select id="user-select" aria-label="User selection"></select>
+      </section>
+
+      <section id="bookmarks-section">
+        <!-- Bookmarks for selected user will appear here -->
+      </section>
+    </main>
+    
   </body>
+
 </html>
