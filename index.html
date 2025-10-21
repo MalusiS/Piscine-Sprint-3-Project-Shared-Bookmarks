@@ -11,6 +11,7 @@
   <body>
 
     <main id="app">
+
       <h1>Shared Bookmarks</h1>
 
       <section id="user-section">
@@ -21,8 +22,28 @@
       <section id="bookmarks-section">
         <!-- Bookmarks for selected user will appear here -->
       </section>
+
+      <section id="add-bookmark-section">
+        <h2>Add New Bookmark</h2>
+        <form id="bookmark-form">
+          <div>
+            <label for="bookmark-url">URL:</label>
+            <input type="url" id="bookmark-url" name="url" required placeholder="https://example.com" />
+          </div>
+          <div>
+            <label for="bookmark-title">Title:</label>
+            <input type="text" id="bookmark-title" name="title" required />
+          </div>
+          <div>
+            <label for="bookmark-description">Description:</label>
+            <textarea id="bookmark-description" name="description" required></textarea>
+          </div>
+          <button type="submit">Add Bookmark</button>
+        </form>
+      </section>
+      
     </main>
-    
+
   </body>
 
 </html>
