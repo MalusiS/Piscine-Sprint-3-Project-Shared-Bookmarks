@@ -1,12 +1,46 @@
-// This is a placeholder file which shows how you can access functions defined in other files.
-// It can be loaded into index.html.
-// You can delete the contents of the file once you have understood how it works.
-// Note that when running locally, in order to open a web page which uses modules, you must serve the directory over HTTP e.g. with https://www.npmjs.com/package/http-server
-// You can't open the index.html file using a file:// URL.
-
 import { getUserIds } from "./storage.js";
 
-window.onload = function () {
+// Keep track of currently selected user
+let selectedUserId = null;
+
+/**
+ * Renders the user dropdown list.
+ */
+function renderUserDropdown() {
+  const userSelect = document.getElementById("user-select");
   const users = getUserIds();
-  document.querySelector("body").innerText = `There are ${users.length} users`;
-};
+
+  // Clear any existing options
+  userSelect.innerHTML = "";
+
+  // Populate dropdown with user options
+  users.forEach((userId, index) => {
+    const option = document.createElement("option");
+    option.value = userId;
+    option.textContent = `User ${index + 1}`;
+    userSelect.appendChild(option);
+  });
+
+  // Default selection
+  selectedUserId = users[0];
+  userSelect.value = selectedUserId;
+
+  console.log(`Default selected user: ${selectedUserId}`);
+}
+
+/**
+ * Handles change in user selection.
+ */
+function handleUserChange(event) {
+  selectedUserId = event.target.value;
+  console.log(`Selected user changed to: ${selectedUserId}`);
+  // Later: trigger re-render of bookmarks for this user
+}
+
+// Initialize app on DOM load
+window.addEventListener("DOMContentLoaded", () => {
+  renderUserDropdown();
+
+  const userSelect = document.getElementById("user-select");
+  userSelect.addEventListener("change", handleUserChange);
+});
