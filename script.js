@@ -1,14 +1,11 @@
 import { getUserIds, getData, setData } from "./storage.js";
+import { formatTimestamp, isValidUrl } from "./utils.js";
 
 let selectedUserId = null;
 
-/**
- * Renders the user dropdown list.
- */
 function renderUserDropdown() {
   const userSelect = document.getElementById("user-select");
   const users = getUserIds();
-
   userSelect.innerHTML = "";
 
   users.forEach((userId, index) => {
@@ -20,32 +17,20 @@ function renderUserDropdown() {
 
   selectedUserId = users[0];
   userSelect.value = selectedUserId;
-
-  console.log(`Default selected user: ${selectedUserId}`);
 }
 
-/**
- * Handles change in user selection.
- */
 function handleUserChange(event) {
   selectedUserId = event.target.value;
-  console.log(`Selected user changed to: ${selectedUserId}`);
   renderBookmarks();
 }
 
-/**
- * Renders bookmarks for the selected user in #bookmarks-section.
- */
 function renderBookmarks() {
   const bookmarksSection = document.getElementById("bookmarks-section");
-
-  // Clear previous content
   while (bookmarksSection.firstChild) {
     bookmarksSection.removeChild(bookmarksSection.firstChild);
   }
 
   const data = getData(selectedUserId);
-
   if (!data || data.length === 0) {
     const msg = document.createElement("p");
     msg.textContent = "No bookmarks yet for this user.";
@@ -53,11 +38,9 @@ function renderBookmarks() {
     return;
   }
 
-  // Sort descending by date
   data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   const list = document.createElement("ul");
-
   data.forEach((bookmark) => {
     const item = document.createElement("li");
 
@@ -72,29 +55,22 @@ function renderBookmarks() {
 
     const time = document.createElement("time");
     time.datetime = bookmark.createdAt;
-    time.textContent = new Date(bookmark.createdAt).toLocaleString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "numeric",
-      minute: "2-digit",
-      timeZoneName: "short",
-    });
+    time.textContent = formatTimestamp(bookmark.createdAt); // Uses utils.js
 
-    item.appendChild(titleLink);
-    item.appendChild(desc);
-    item.appendChild(time);
+    item.append(titleLink, desc, time);
     list.appendChild(item);
   });
 
   bookmarksSection.appendChild(list);
 }
 
-/**
- * Handles submission of the Add Bookmark form.
- */
 function handleAddBookmark(event) {
   event.preventDefault();
+
+  if (!selectedUserId) {
+    alert("Please select a user first.");
+    return;
+  }
 
   const url = document.getElementById("bookmark-url").value.trim();
   const title = document.getElementById("bookmark-title").value.trim();
@@ -105,10 +81,11 @@ function handleAddBookmark(event) {
     return;
   }
 
-  // Retrieve existing data or initialize empty array
-  const existingData = getData(selectedUserId) || [];
+  if (!isValidUrl(url)) { // Uses utils.js
+    alert("Please enter a valid URL starting with http:// or https://");
+    return;
+  }
 
-  // Create new bookmark object
   const newBookmark = {
     url,
     title,
@@ -116,28 +93,16 @@ function handleAddBookmark(event) {
     createdAt: new Date().toISOString(),
   };
 
-  // Append and store
-  const updatedData = [...existingData, newBookmark];
-  setData(selectedUserId, updatedData);
-
-  // Clear form
-  event.target.reset();
-
-  // Re-render bookmarks
+  const existing = getData(selectedUserId) || [];
+  existing.push(newBookmark);
+  setData(selectedUserId, existing);
   renderBookmarks();
-
-  console.log(`Bookmark added for User ${selectedUserId}:`, newBookmark);
+  event.target.reset();
 }
 
-// Initialize app
 window.addEventListener("DOMContentLoaded", () => {
   renderUserDropdown();
-
-  const userSelect = document.getElementById("user-select");
-  userSelect.addEventListener("change", handleUserChange);
-
-  const bookmarkForm = document.getElementById("bookmark-form");
-  bookmarkForm.addEventListener("submit", handleAddBookmark);
-
+  document.getElementById("user-select").addEventListener("change", handleUserChange);
+  document.getElementById("bookmark-form").addEventListener("submit", handleAddBookmark);
   renderBookmarks();
 });
