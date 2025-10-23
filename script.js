@@ -41,6 +41,7 @@ function renderBookmarks() {
   data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   const list = document.createElement("ul");
+
   data.forEach((bookmark) => {
     const item = document.createElement("li");
 
@@ -49,13 +50,15 @@ function renderBookmarks() {
     titleLink.textContent = bookmark.title;
     titleLink.target = "_blank";
     titleLink.rel = "noopener noreferrer";
+    // Keeping this explicit aria-label to prevent possible Lighthouse audit failures
+    titleLink.setAttribute("aria-label", `Open bookmark: ${bookmark.title}`);
 
     const desc = document.createElement("p");
     desc.textContent = bookmark.description;
 
     const time = document.createElement("time");
     time.datetime = bookmark.createdAt;
-    time.textContent = formatTimestamp(bookmark.createdAt); // Uses utils.js
+    time.textContent = formatTimestamp(bookmark.createdAt);
 
     item.append(titleLink, desc, time);
     list.appendChild(item);
@@ -81,7 +84,7 @@ function handleAddBookmark(event) {
     return;
   }
 
-  if (!isValidUrl(url)) { // Uses utils.js
+  if (!isValidUrl(url)) {
     alert("Please enter a valid URL starting with http:// or https://");
     return;
   }
@@ -98,6 +101,9 @@ function handleAddBookmark(event) {
   setData(selectedUserId, existing);
   renderBookmarks();
   event.target.reset();
+
+  // Added focus to satisfy manual audit: "The user's focus is directed to new content added to the page"
+  document.getElementById("bookmarks-section").focus();
 }
 
 window.addEventListener("DOMContentLoaded", () => {

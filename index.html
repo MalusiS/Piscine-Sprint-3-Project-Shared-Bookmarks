@@ -14,16 +14,15 @@
 
       <h1>Shared Bookmarks</h1>
 
-      <section id="user-section">
+      <section id="user-section" aria-label="User Selection">
         <label for="user-select">Select User:</label>
-        <select id="user-select" aria-label="User selection"></select>
+        <select id="user-select"></select>
       </section>
 
-      <section id="bookmarks-section">
-        <!-- Bookmarks for selected user will appear here -->
-      </section>
+      <section id="bookmarks-section" tabindex="-1" aria-live="polite" aria-label="Bookmark List">
+        </section>
 
-      <section id="add-bookmark-section">
+      <section id="add-bookmark-section" aria-label="Add Bookmark Form">
         <h2>Add New Bookmark</h2>
         <form id="bookmark-form">
           <div>
