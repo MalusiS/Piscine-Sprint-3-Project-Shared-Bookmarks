@@ -24,8 +24,11 @@ export function formatTimestamp(isoString) {
  */
 export function isValidUrl(url) {
   try {
+    // Must start with http:// or https:// explicitly
+    if (!/^https?:\/\//i.test(url)) return false;
+
     const parsed = new URL(url);
-    return ["http:", "https:"].includes(parsed.protocol);
+    return parsed.protocol === "http:" || parsed.protocol === "https:";
   } catch {
     return false;
   }
