@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shared Bookmarks</title>
 </head>
 <body>
@@ -10,11 +10,13 @@
     <h1>Shared Bookmarks</h1>
 
     <section aria-labelledby="user-select-label">
-      <label id="user-select-label" for="user-select">Select User:</label><br>
+      <h2 id="user-select-label">Choose User</h2>
+      <label for="user-select">Select User:</label><br>
       <select id="user-select" name="user-select"></select>
     </section>
 
     <section id="bookmarks-section" tabindex="-1" aria-live="polite">
+      <h2 id="bookmarks-section-label">User Bookmarks</h2>
       <p>No bookmarks yet for this user.</p>
     </section>
 
