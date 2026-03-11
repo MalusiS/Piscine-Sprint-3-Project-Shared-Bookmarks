@@ -15,21 +15,21 @@ A rigorously tested, WCAG AA-compliant bookmark manager built with Vanilla JavaS
 ## ✨ Core Engineering Features
 
 ### 🛡️ Security & State Management
-* **XSS Neutralization:** All user inputs are sanitized and safely injected via `textContent` rather than `innerHTML` to prevent Cross-Site Scripting attacks.
+* **XSS Neutralisation:** All user inputs are sanitised and safely injected via `textContent` rather than `innerHTML` to prevent Cross-Site Scripting attacks.
 * **UUID-Based Deletion:** Replaced standard array-index deletion with `crypto.randomUUID()`, eliminating data-loss bugs when deleting items from a filtered search state.
 * **Defensive Storage Abstraction:** The LocalStorage API is wrapped in a dedicated module with `try/catch` blocks, strict type validation (`Array.isArray`), and graceful fallbacks for corrupted JSON data or quota-exceeded errors.
 
 ### ♿ Accessibility (A11y)
 * **100% Lighthouse & WAVE Compliant:** Achieved zero errors on the WAVE Web Accessibility Evaluation Tool in both Light and Dark modes.
 * **Accessible Modals:** Custom modal includes `role="dialog"`, `aria-modal="true"`, and focus-trapping logic (returns focus to the triggering element upon closing, supports `Escape` key dismissal).
-* **Semantic HTML:** Fully structured with semantic landmarks (`<main>`, `<header>`), `aria-labels` on icon-only buttons, and optimized contrast ratios for all text sizes.
+* **Semantic HTML:** Fully structured with semantic landmarks (`<main>`, `<header>`), `aria-labels` on icon-only buttons, and optimised contrast ratios for all text sizes.
 
 ### 🧪 Test-Driven Development (TDD)
 * **Comprehensive Jest Suite:** Utility functions and state logic are fully covered by automated tests.
 * **LocalStorage Mocking:** The test suite includes a custom browser storage mock to test edge cases, including injecting corrupted JSON to verify the app's error-recovery mechanisms.
 
 ### 📱 UI / UX
-* **Responsive Architecture:** Built mobile-first with Tailwind CSS, featuring a responsive header that optimizes premium screen real estate on smaller devices.
+* **Responsive Architecture:** Built mobile-first with Tailwind CSS, featuring a responsive header that optimises premium screen real estate on smaller devices.
 * **Smart Truncation:** Descriptions are truncated at exact word boundaries before appending an ellipsis, preventing awkward or broken words in the UI.
 * **Theme Persistence:** A system-aware Dark/Light mode toggle that saves user preferences to LocalStorage.
 
@@ -63,7 +63,7 @@ To execute the Jest test suite and verify the business logic:
 - `index.html` - The semantic, fully accessible markup shell. 
 - `script.js` - The main controller handling DOM manipulation, event delegation, and UI state.
 - `storage.js` - A pure, side-effect-free abstraction layer managing LocalStorage interactions.
-- `utils.js` - Pure helper functions (formatting, validation, sanitization) built via TDD.
+- `utils.js` - Pure helper functions (formatting, validation, sanitisation) built via TDD.
 - `__tests__/` - The Jest test suites verifying core logic and edge cases.
 
 ---
