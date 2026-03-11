@@ -38,7 +38,7 @@ Because this project is built with Vanilla JS and a Tailwind CDN, there is no co
 ### Running the App
 1. Clone the repository:
    ```bash
-   git clone [https://github.com/MalusiS/Piscine-Sprint-3-Project-Shared-Bookmarks.git](https://github.com/MalusiS/Piscine-Sprint-3-Project-Shared-Bookmarks.git)
+   git clone https://github.com/MalusiS/Piscine-Sprint-3-Project-Shared-Bookmarks.git
 
 2. Open `index.html` in your browser, or use an extension like VS Code Live Server.
 
@@ -67,4 +67,4 @@ To execute the Jest test suite and verify the business logic:
 ## 👨‍💻 Author
 
 **Malusi Skunyana**
-- [GitHub] (https://github.com/MalusiS)
+- [GitHub](https://github.com/MalusiS)
