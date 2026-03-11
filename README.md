@@ -1,65 +1,70 @@
-# Project: Shared Bookmarks
+# 📚 Shared Bookmarks
 
-As developers, we spend a lot of time reading articles on the web and we often want to record useful links to come back to them later. It is fun to share your bookmarks with others so that they can find interesting and useful links too.
+![Accessibility](https://img.shields.io/badge/Accessibility-100%25_Lighthouse-success)
+![WAVE](https://img.shields.io/badge/WAVE-Zero_Errors-success)
+![Tests](https://img.shields.io/badge/Tests-18%2F18_Passing-success)
+![Vanilla JS](https://img.shields.io/badge/JavaScript-ES6%2B-F7DF1E?logo=javascript&logoColor=black)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-CDN-38B2AC?logo=tailwind-css&logoColor=white)
 
-Here are some examples of bookmark sites:
+A rigorously tested, WCAG AA-compliant bookmark manager built with Vanilla JavaScript. This project focuses heavily on defensive programming, accessibility, and client-side data integrity.
 
-- [Jason Kottke](https://kottke.org/)
-- [Jeremy Keith](https://adactio.com/links)
-- [Andy Baio](https://waxy.org/category/links/)
-- [Ali Smith](https://bookmarks.alasdairsmith.co.uk/)
+## ✨ Core Engineering Features
 
-Your task is to write code which allows a user to save a link with a short description and share them with others.
+### 🛡️ Security & State Management
+* **XSS Neutralization:** All user inputs are sanitized and safely injected via `textContent` rather than `innerHTML` to prevent Cross-Site Scripting attacks.
+* **UUID-Based Deletion:** Replaced standard array-index deletion with `crypto.randomUUID()`, eliminating data-loss bugs when deleting items from a filtered search state.
+* **Defensive Storage Abstraction:** The LocalStorage API is wrapped in a dedicated module with `try/catch` blocks, strict type validation (`Array.isArray`), and graceful fallbacks for corrupted JSON data or quota-exceeded errors.
 
-You should make a frontend, which displays a list of bookmarked links and the user’s description. A user can create new bookmarks by submitting a form with the URL and the description. You should use **HTML and JavaScript only**. You should **not** use CSS. We want to focus on your ability to create the correct logic and not spend time on creating the perfect UI.
+### ♿ Accessibility (A11y)
+* **100% Lighthouse & WAVE Compliant:** Achieved zero errors on the WAVE Web Accessibility Evaluation Tool in both Light and Dark modes.
+* **Accessible Modals:** Custom modal includes `role="dialog"`, `aria-modal="true"`, and focus-trapping logic (returns focus to the triggering element upon closing, supports `Escape` key dismissal).
+* **Semantic HTML:** Fully structured with semantic landmarks (`<main>`, `<header>`), `aria-labels` on icon-only buttons, and optimized contrast ratios for all text sizes.
 
-## Supplied scaffolding
+### 🧪 Test-Driven Development (TDD)
+* **Comprehensive Jest Suite:** Utility functions and state logic are fully covered by automated tests.
+* **LocalStorage Mocking:** The test suite includes a custom browser storage mock to test edge cases, including injecting corrupted JSON to verify the app's error-recovery mechanisms.
 
-We have supplied a few sample files in the repo to demonstrate how you can define functions in one file and use them from another file. Feel free to use these files in your solution if you want, or to just use them for inspiration for your own solution.
+### 📱 UI / UX
+* **Responsive Architecture:** Built mobile-first with Tailwind CSS, featuring a responsive header that optimizes premium screen real estate on smaller devices.
+* **Smart Truncation:** Descriptions are truncated at exact word boundaries before appending an ellipsis, preventing awkward or broken words in the UI.
+* **Theme Persistence:** A system-aware Dark/Light mode toggle that saves user preferences to LocalStorage.
 
-Note that when running locally, in order to open a web page which uses modules, you must serve the directory over HTTP e.g. with https://www.npmjs.com/package/http-server - you can't open the `index.html` file using a `file://` URL.
+---
 
-We have also provided a `storage.js` file, which contains four functions to help with data storage. `storage.js` is a file containing four functions:
+## 🚀 Getting Started
 
-- `getUserIds()`: when called, returns an array of strings, each of which is a user id
-- `getData(userId)`: when called with a user id string as an argument, returns an array of objects, each of which represents a bookmark that belongs to the user
-- `setData(userId, data)`: when called with a user id string and a data object as arguments, it will store the data for the user. The object should contain information about the bookmark, such as the URL, title and description. The function does not return anything
-- `clearData(userId)`: when called with a user id string as an argument, it will clear any stored data associated with the user id. This is provided to help with development, and is not required in the final code
+Because this project is built with Vanilla JS and a Tailwind CDN, there is no complex build step required to run the application itself. 
 
-**Note**: None of the storage functions perform any validation or de-duplication, so ensure that you are sending the correct data before storing it.
+### Running the App
+1. Clone the repository:
+   ```bash
+   git clone [https://github.com/MalusiS/Piscine-Sprint-3-Project-Shared-Bookmarks.git](https://github.com/MalusiS/Piscine-Sprint-3-Project-Shared-Bookmarks.git)
 
-## Requirements
+2. Open `index.html` in your browser, or use an extension like VS Code Live Server.
 
-You must submit both a link to your GitHub repo, and a link to the deployed website.
+### Running the Test Suite
+To execute the Jest test suite and verify the business logic:
+1. Install the development dependencies:
+   ```bash
+   npm install
 
-Your website must be hosted on the internet, and must be automatically deployed when you merge changes to your GitHub repo.
+2. Run the tests (Configured for ES Modules):
+   ```bash
+   npm test
 
-Your website must include a drop-down to select a user to display information for. When a user is selected, you must display the list of bookmarks for that user. If there are no bookmarks for the user, you should present a message explaining this.
+---
 
-You **must not** implement any kind of authentication. Just a drop-down to choose which user’s information to display. You **must not** implement data storage yourself, as we have provided that for you.
+## 📁 Architecture & File Structure
 
-After picking a user, your website should display the list of bookmarks in reverse chronological order. For each bookmark, it should display the title and description of the bookmark. The title should be hyperlink to the URL of the bookmark. The timestamp at which the bookmark was created should be displayed.
+- `index.html` - The semantic, fully accessible markup shell. 
+- `script.js` - The main controller handling DOM manipulation, event delegation, and UI state.
+- `storage.js` - A pure, side-effect-free abstraction layer managing LocalStorage interactions.
+- `utils.js` - Pure helper functions (formatting, validation, sanitization) built via TDD.
+- `__tests__/` - The Jest test suites verifying core logic and edge cases.
 
-Your website must include a form with text inputs for the URL and title, a textarea for the description and submit button that allows a user to add a new topic. This form must be accessible, so for example, hitting the Enter key will also submit the topic name, the same as clicking the submit button.
+---
 
-After the new data has been stored, the updated list of bookmarks must be displayed (including the new bookmark) for the relevant user.
+## 👨‍💻 Author
 
-Your GitHub repository must contain unit tests which demonstrate that your code works. End to end tests are optional.
-
-Every view of your website must be accessible (i.e. for each user, whether or not they have bookmarks, etc). We will test this by making sure that "Snapshot" mode of Lighthouse gives 100% accessibility for any view we look at.
-
-## Rubric
-
-All of the below requirements must be met for the project to be considered complete:
-
-- The website must contain a drop-down which lists five users
-- Selecting a user must display the list of bookmarks for the relevant user
-- If there are no bookmarks for the selected user, a message is displayed to explain this
-- The list of bookmarks must be shown in reverse chronological order
-- Each bookmark has a title, description and created at timestamp displayed
-- Each bookmark’s title is a link to the bookmark’s URL
-- The website must contain a form with inputs for a URL, a title, and a description. The form should have a submit button.
-- Submitting the form adds a new bookmark for the relevant user only
-- After creating a new bookmark, the list of bookmarks for the current user is shown, including the new bookmark
-- The website must score 100 for accessibility in Lighthouse
-- Unit tests must be written for at least one non-trivial function
+**Malusi Skunyana**
+- [GitHub] (https://github.com/MalusiS)

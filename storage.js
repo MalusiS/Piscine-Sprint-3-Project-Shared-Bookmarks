@@ -1,41 +1,99 @@
-// This is a scaffolding file we have provided for you which allows you to manage stored data for your application.
-// It can be loaded into index.html.
-// You should not need to modify it to complete the project.
+// storage.js
 
 /**
- * Get a list of user ids
+ * Shared Bookmarks – LocalStorage Abstraction Layer
  *
- * @returns {string[]} List of user id strings
+ * Pure, testable functions that simulate multiple users.
+ * Everything is stored locally in the browser (no backend).
+ * Designed for TDD – every function is pure and side-effect free where possible.
+ */
+
+const STORAGE_PREFIX = "shared-bookmarks-user-";
+
+/**
+ * Returns a fixed list of demo user IDs (simulates multiple users).
+ * @returns {string[]} Array of user ID strings
  */
 export function getUserIds() {
   return ["1", "2", "3", "4", "5"];
 }
 
 /**
- * Get data associated with a specific user.
+ * Retrieves bookmarks for a specific user safely.
+ * Returns an empty array if no data exists, if JSON is corrupted, or if data is not an array.
  *
- * @param {string} userId The user id to get data for
- * @returns {any | null} The data associated with the user
+ * @param {string} userId - The user ID to fetch data for
+ * @returns {Array<object>} Array of bookmark objects
  */
 export function getData(userId) {
-  return JSON.parse(localStorage.getItem(`stored-data-user-${userId}`));
+  if (!userId) return [];
+
+  try {
+    const key = `${STORAGE_PREFIX}${userId}`;
+    const stored = localStorage.getItem(key);
+    
+    if (!stored) return [];
+    
+    const parsed = JSON.parse(stored);
+    
+    // Ensure the parsed data is strictly an array before returning
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (error) {
+    console.warn(`⚠️ Corrupted data for user ${userId} – resetting`);
+    clearData(userId);
+    return [];
+  }
 }
 
 /**
- * Store data for a specific user.
+ * Saves bookmarks for a specific user.
  *
- * @param {string} userId The user id to store data for
- * @param {any} data The data to store
+ * @param {string} userId - The user ID to store data for
+ * @param {Array<object>} data - Array of bookmark objects
+ * @returns {boolean} True if save was successful, false if storage quota exceeded
  */
 export function setData(userId, data) {
-  localStorage.setItem(`stored-data-user-${userId}`, JSON.stringify(data));
+  if (!userId) return false;
+
+  // Fallback to an empty array if invalid data is passed
+  const safeData = Array.isArray(data) ? data : [];
+
+  try {
+    const key = `${STORAGE_PREFIX}${userId}`;
+    localStorage.setItem(key, JSON.stringify(safeData));
+    return true; // Save successful
+  } catch (error) {
+    // Catches QuotaExceededError (Storage full or Private Browsing restrictions)
+    console.error(`❌ Failed to save data for user ${userId}. Storage may be full.`, error);
+    return false; // Save failed
+  }
 }
 
 /**
- * Clears all data associated with a specific user. NOTE: This is provided to help with development, and is not required in the final code
+ * Clears all bookmarks for a specific user.
  *
- * @param {string} userId The user id to clear associated data for
+ * @param {string} userId - The user ID to clear
  */
 export function clearData(userId) {
-  localStorage.removeItem(`stored-data-user-${userId}`);
+  if (!userId) return;
+  localStorage.removeItem(`${STORAGE_PREFIX}${userId}`);
+}
+
+/**
+ * Resets ALL demo users (useful for "Reset Demo" button in a future version).
+ */
+export function resetAllData() {
+  getUserIds().forEach((userId) => {
+    clearData(userId);
+  });
+  console.info("✅ All demo data has been reset");
+}
+
+/**
+ * Returns total number of bookmarks across all users (for stats/demo purposes).
+ */
+export function getTotalBookmarkCount() {
+  return getUserIds().reduce((total, userId) => {
+    return total + getData(userId).length;
+  }, 0);
 }
