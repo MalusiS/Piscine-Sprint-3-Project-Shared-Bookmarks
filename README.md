@@ -8,6 +8,10 @@
 
 A rigorously tested, WCAG AA-compliant bookmark manager built with Vanilla JavaScript. This project focuses heavily on defensive programming, accessibility, and client-side data integrity.
 
+## 🖼 Preview
+
+![A screenshot of the Shared Bookmarks interface](/shared-bookmarks.png)
+
 ## ✨ Core Engineering Features
 
 ### 🛡️ Security & State Management
