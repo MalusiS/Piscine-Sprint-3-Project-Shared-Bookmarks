@@ -12,6 +12,14 @@ A rigorously tested, WCAG AA-compliant bookmark manager built with Vanilla JavaS
 
 ![A screenshot of the Shared Bookmarks interface](/shared-bookmarks.png)
 
+## 🌐 Live Demo
+
+View the live application:
+
+👉 https://cyf-malusi-bookmarks.netlify.app/
+
+---
+
 ## ✨ Core Engineering Features
 
 ### 🛡️ Security & State Management
